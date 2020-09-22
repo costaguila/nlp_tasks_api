@@ -9,7 +9,8 @@ from rest_framework_jwt.views import(
 )
 from .docs.views import schema_view
 from .users.views import UserViewSet, UserListCreateViewSet
-from nlp_tasks_api.apps.text_processing.views import CountVocabularySimilarityView
+from nlp_tasks_api.apps.text_processing.views import (CountVocabularySimilarityView,
+    UploadedFilesVocabularySimilarityView, UploadFilesView)
 
 router = DefaultRouter()
 router.register(r'users', UserViewSet)
@@ -18,6 +19,8 @@ router.register(r'users', UserListCreateViewSet)
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/v1/', include(router.urls)),
+    path('api/v1/documents/', UploadFilesView.as_view(), name='api-document-similarity-view'),
+    path('api/v1/documents-similarity/', UploadedFilesVocabularySimilarityView.as_view(), name='api-document-similarity-view'),
     path('api/v1/similarity/',CountVocabularySimilarityView.as_view(), name='api-similarity-view'),
     path('api-token-auth/', obtain_jwt_token, name='api-token-auth'),
     path('api-token-refresh/', refresh_jwt_token, name='api-token-refresh'),

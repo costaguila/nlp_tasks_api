@@ -4,8 +4,11 @@ from rest_framework.response import Response
 from rest_framework import authentication, permissions
 from rest_framework.permissions import AllowAny
 from rest_framework import status
+from rest_framework import generics
 
 from nlp_tasks_api.apps.text_processing.utils import *
+from nlp_tasks_api.apps.text_processing.models import Documento
+from nlp_tasks_api.apps.text_processing.serializers import DocumentoSerializer
 
 class CountVocabularySimilarityView(APIView):
     permission_classes = (AllowAny,)
@@ -14,6 +17,10 @@ class CountVocabularySimilarityView(APIView):
         """
             Recebe uma requizição com n textos.
             Extrai o vocabulario, e a frequência das palavras
+
+            Parâmetros:
+            textos: Um array de textos.
+            gram: A granularidade dos tokens.
         """
         textos = request.data.get('textos',[])
         gram = request.data.get('ngrams', 1)
@@ -43,3 +50,15 @@ class CountVocabularySimilarityView(APIView):
 
 
         return Response(result, status=status.HTTP_200_OK)
+
+class UploadFilesView(generics.ListCreateAPIView):
+    queryset = Documento.objects.all()
+    serializer_class = DocumentoSerializer
+
+    permission_classes = (AllowAny,)
+
+class UploadedFilesVocabularySimilarityView(generics.ListCreateAPIView):
+    queryset = Documento.objects.all()
+    serializer_class = DocumentoSerializer
+
+    permission_classes = (AllowAny,)
