@@ -8,4 +8,4 @@ class Documento(CommonInfo):
     file = models.FileField(upload_to='documentos')
 
     def __str__(self):
-        return "[{}] {}".format(self.created_at, str(self.file))
+        return "{}".format(str(self.file))
