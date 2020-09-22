@@ -27,6 +27,7 @@ class Common(Configuration):
 
         # Your apps
         'nlp_tasks_api.users',
+        'nlp_tasks_api.apps.text_processing'
 
     )
 
