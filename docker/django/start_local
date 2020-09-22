@@ -7,4 +7,7 @@ set -o nounset
 
 python manage.py migrate
 python manage.py compilemessages
+# Criar admin
+echo "from nlp_tasks_api.users.models import User; print('Admin ok') if User.objects.filter(email='admin@admin.com').exists() else User.objects.create_superuser('admin@admin.com','nlp2053admin')" | python manage.py shell
+
 python manage.py runserver 0.0.0.0:8000
