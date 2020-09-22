@@ -1,0 +1,12 @@
+# General
+# ------------------------------------------------------------------------------
+DJANGO_DEBUG=True
+SECRET_KEY=dev
+
+# PostgreSQL
+# ------------------------------------------------------------------------------
+POSTGRES_HOST=postgres
+POSTGRES_PORT=5432
+POSTGRES_DB=nlp_tasks_api
+POSTGRES_USER=nlp_tasks_api
+POSTGRES_PASSWORD=secret

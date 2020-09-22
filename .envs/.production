@@ -1,0 +1,23 @@
+# This file is an example of the main environment variables for production.
+# ------------------------------------------------------------------------------
+
+# General
+# ------------------------------------------------------------------------------
+ALLOWED_HOSTS=None
+CORS_ORIGIN_ALLOW_ALL=True
+DJANGO_CONFIGURATION=Production
+DJANGO_DEBUG=False
+DJANGO_SETTINGS_MODULE=nlp_tasks_api.config
+SECRET_KEY=secret
+
+# AWS
+# ------------------------------------------------------------------------------
+DJANGO_AWS_ACCESS_KEY_ID=
+DJANGO_AWS_SECRET_ACCESS_KEY=
+DJANGO_AWS_STORAGE_BUCKET_NAME=
+
+# Email
+# ------------------------------------------------------------------------------
+EMAIL_HOST=
+EMAIL_HOST_PASSWORD=
+EMAIL_HOST_USER=
