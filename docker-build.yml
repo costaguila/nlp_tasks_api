@@ -1,0 +1,10 @@
+version: '3'
+
+services:
+  django:
+    build:
+      context: .
+      dockerfile: ./docker/django/Dockerfile
+      args:
+        ENVIRONMENT: production
+    image: 'nlp_tasks_api_production:latest'
