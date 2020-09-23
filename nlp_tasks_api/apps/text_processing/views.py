@@ -23,31 +23,9 @@ class CountVocabularySimilarityView(APIView):
             gram: A granularidade dos tokens.
         """
         textos = request.data.get('textos',[])
-        gram = request.data.get('ngrams', 1)
+        gram = int(request.data.get('ngrams', 1))
 
-        textos_1 = [ strip_punctuation(texto_1.lower().strip()) for texto_1 in textos]
-        tokens_text1 = [texto.split(' ') for texto in textos_1]
-        ngrams_text1 = [n_gram(tokens, gram) for tokens in tokens_text1]
-
-        flat = [item for sublist in ngrams_text1 for item in sublist]
-        vocabulario = unique(flat)
-
-        occurrance_list1 = [count_ocurrance(ngrams_text, vocabulario) for ngrams_text in ngrams_text1]
-
-        response = []
-        for index, item in enumerate(textos):
-            response.append({
-                "texto": item,
-                "n_gram": gram,
-                "tokens": tokens_text1[index],
-                "ngrams_texto": ngrams_text1[index],
-                "ocurrence": occurrance_list1[index]
-            })
-        result = {
-            "vocabulario": vocabulario,
-            "resultados": response
-        }
-
+        result = format_vocabulary_response(textos, gram)
 
         return Response(result, status=status.HTTP_200_OK)
 
@@ -57,8 +35,23 @@ class UploadFilesView(generics.ListCreateAPIView):
 
     permission_classes = (AllowAny,)
 
-class UploadedFilesVocabularySimilarityView(generics.ListCreateAPIView):
+class UploadedFilesVocabularySimilarityView(generics.ListAPIView):
     queryset = Documento.objects.all()
     serializer_class = DocumentoSerializer
 
     permission_classes = (AllowAny,)
+
+    def get(self, request, *args, **kwargs):
+        queryset = self.filter_queryset(self.get_queryset())
+        textos = []
+        gram = int(request.GET.get('ngrams', 1))
+
+        for arquivo in queryset:
+            with arquivo.file.open('r') as f:
+                lines = f.read()
+                f.close()
+                lines = lines.strip()
+                textos.append(lines)
+        result = format_vocabulary_response(textos, gram)
+
+        return Response(result)
